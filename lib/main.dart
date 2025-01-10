@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:footraining/firebase_config.dart';
 
-void main() {
+
+//********************************************************************************************************************
+void main() async{
+  await FirebaseConfig.initializeFirebase();
   runApp(const MyApp());
 }
-
+//********************************************************************************************************************
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
 
   @override
@@ -13,7 +18,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false, home: MyHomePage());
   }
 }
-
+//********************************************************************************************************************
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
@@ -21,7 +26,12 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+//********************************************************************************************************************
 class _MyHomePageState extends State<MyHomePage> {
+//******************************************************************************************
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+//******************************************************************************************
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,6 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                           ),
                           child: TextField(
+                            controller: emailController,
                             decoration: InputDecoration(
                               hintText: "Email or Phone Number",
                               hintStyle: TextStyle(
@@ -102,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               border: Border(bottom: BorderSide(color: Color(0xFFEEEEEE)))
                           ),
                           child: TextField(
+                            controller: passwordController,
                             decoration: InputDecoration(
                               hintText: "Password",
                               hintStyle: TextStyle(
@@ -114,7 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         SizedBox(height: 40,),
-                        Text("Forgot Password?",style: TextStyle(color: Colors.grey),),
+                        //Text("Forgot Password?",style: TextStyle(color: Colors.grey),),
+                        TextButton(onPressed: ()=> print("forgot a lyam"), child: Text("Forgot Password?",style: TextStyle(color: Colors.grey),),),
                         SizedBox(height: 40,),
                         Container(
                           height: 50,
@@ -125,38 +138,48 @@ class _MyHomePageState extends State<MyHomePage> {
 
                           ),
                           child: Center(
-                            child: Text("Login",style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold
-                            ),),
+                            // child: Text("Login",style: TextStyle(
+                            //   color: Colors.white,
+                            //   fontSize: 16,
+                            //   fontWeight: FontWeight.bold
+                            // ),
+                            // ),
+                            child : TextButton(onPressed:() {
+                              print("waah alyam waaah");
+                            }, child: Text("Login",style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold
+                              ),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(
                             height: 80,),
-                        Row(
-                          children: <Widget>[
-                            Expanded(
-                              child: Container(
-                                height:50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                      color: Colors.blueAccent
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 30,),
-                            Expanded(
-                              child: Container(
-                                height:50,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                      color: Colors.blueAccent
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: <Widget>[
+                        //     Expanded(
+                        //       child: Container(
+                        //         height:50,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(50),
+                        //               color: Colors.blueAccent
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: 30,),
+                        //     Expanded(
+                        //       child: Container(
+                        //         height:50,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius: BorderRadius.circular(50),
+                        //               color: Colors.blueAccent
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
 
 
                       ],

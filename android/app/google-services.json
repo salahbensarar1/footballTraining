@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "388672883836",
+    "project_id": "foottraining-4051b",
+    "storage_bucket": "foottraining-4051b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388672883836:android:921dacc8854523f37e0df9",
+        "android_client_info": {
+          "package_name": "com.example.footraining"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0ld4bnw5JlxBhHShltnH32jR6M3X8Gns"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
