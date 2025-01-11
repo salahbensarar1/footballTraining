@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:footraining/firebase_config.dart';
+import 'package:footraining/views/adminScreen.dart';
+import 'package:footraining/views/coachScreen.dart';
+import 'package:footraining/views/receptionistScreen.dart';
 
 
 //********************************************************************************************************************
@@ -145,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             // ),
                             // ),
                             child : TextButton(onPressed:() {
-                              print("waah alyam waaah");
+                              loginUser(emailController.text, passwordController.text, context);
                             }, child: Text("Login",style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -195,5 +200,53 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+
+  }
+  Future<void> loginUser(String email, String password, BuildContext context) async {
+    try {
+      // Sign in the user with Firebase Authentication
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Retrieve the user's role from Firestore using their UID
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .get();
+
+      String role = userDoc['role'];
+
+      // Navigate based on the user's role
+      if (role == 'admin') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const AdminScreen()));
+      } else if (role == 'receptionist') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const ReceptionistScreen()));
+      } else if (role == 'coach') {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const CoachScreen()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("No valid role assigned to this user")),
+        );
+      }
+    } catch (e) {
+      print("Error logging in: $e");
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Login Failed"),
+            content: Text(e.toString()),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }
